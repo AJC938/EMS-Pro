@@ -1,0 +1,21 @@
+target/
+.mvn/wrapper/maven-wrapper.jar
+*.class
+*.log
+.idea/
+*.iml
+.vscode/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IntelliJ
+out/
+
+# Runtime database file (generated from database/schema.sql)
+database/*.db
+*.sqlite
+*.sqlite3
