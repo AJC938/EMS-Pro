@@ -2,165 +2,97 @@
 
 **Enterprise Employee Management System**
 
-A console-based Java application for managing employees, departments,
-positions, and attendance records, built on a layered architecture with
-JDBC and SQLite persistence.
-
-## Description
-
-EMS Pro is a command-line enterprise application that centralizes core
-employee-management operations — creating, viewing, updating, deleting,
-and searching Employee, Department, Position, and Attendance records —
-backed by a SQLite database accessed through plain JDBC. The project is
-organized as a layered Java application (Controller, Service, Repository,
-Model) with input validation and a small custom exception layer.
+A Java application for managing employees, departments, positions, and attendance records using a layered architecture with JDBC and SQLite persistence.
 
 ## Features
 
-- Full CRUD (Create, Read, Update, Delete) for Employees, Departments,
-  Positions, and Attendance records
-- Search by ID for Employees, Departments, and Positions
-- Attendance lookup by Employee
-- Reports: total counts for Employees, Departments, Positions, and
-  Attendance records
-- Duplicate-email prevention for Employees
-- Input validation on employee data (email, salary)
-- Console UI with menu navigation and graceful handling of invalid input
+- Full CRUD for Employees, Departments, Positions, and Attendance
+- Search by ID
+- Attendance lookup by employee
+- Summary reports
+- Duplicate-email prevention
+- Input validation
+- Console-based menu navigation
 
-## Architecture Overview
+## Architecture
 
 EMS Pro follows a **Layered Architecture**:
 
-- **Controller** — console menus and user interaction (`MainController`)
-- **Service** — business rules and orchestration (`EmployeeService`,
-  `DepartmentService`, `PositionService`, `AttendanceService`)
-- **Repository** — data access contracts and their JDBC implementations
-  (`*Repository` interfaces and `repository/impl` classes)
-- **Model** — plain Java objects representing the domain entities
-  (`Employee`, `Department`, `Position`, `Attendance`)
-- **Validation / Exception** — input validation (`EmployeeValidator`) and
-  custom exceptions (`DuplicateEmailException`)
-- **Database / Config** — JDBC connection management (`ConnectionManager`)
-  and configuration constants (`DatabaseConfig`)
+- **Controller** — console UI and user interaction
+- **Service** — business rules and orchestration
+- **Repository** — data-access contracts and JDBC implementations
+- **Model** — domain entities
+- **Validation / Exception** — validation and custom exceptions
+- **Database / Config** — SQLite and JDBC connection management
 
-Each layer depends only on the layer beneath it through interfaces, and
-the controller depends exclusively on the service layer — it never
-accesses repositories or the database directly.
-
-For the full set of design and architecture documents produced during
-development, see the [`docs/`](docs) directory:
-
-- [Project Vision](docs/01-Project-Vision.md)
-- [Software Requirements Specification](docs/02-Software-Requirements-Specification.md)
-- [System Architecture](docs/03-System-Architecture.md)
-- [Domain Model](docs/04-Domain-Model.md)
-- [Glossary](docs/05-Glossary.md)
-- [Physical Database Design](docs/06-Physical-Database-Design.md)
+See the [`docs/`](docs) directory for the project's requirements, architecture, domain model, glossary, and database design.
 
 ## Project Structure
 
-```
+```text
 EMS-Pro/
-├── docs/                        # Architecture and design documentation
+├── docs/
 ├── database/
-│   └── schema.sql               # SQLite schema (tables, keys, indexes)
+│   └── schema.sql
 ├── src/
 │   ├── main/java/com/abdullahalmutairi/emspro/
-│   │   ├── Main.java             # Application entry point / wiring
-│   │   ├── controller/           # Console UI
-│   │   ├── service/               # Business logic
-│   │   ├── repository/            # Repository contracts
-│   │   │   └── impl/              # JDBC repository implementations
-│   │   ├── model/                 # Domain entities (POJOs)
-│   │   ├── exception/             # Custom exceptions
-│   │   ├── util/                  # Validation utilities
-│   │   ├── config/                # Configuration constants
-│   │   └── database/              # JDBC connection management
-│   └── test/java                  # Unit tests
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── repository/
+│   │   ├── model/
+│   │   ├── exception/
+│   │   ├── util/
+│   │   ├── config/
+│   │   └── database/
+│   └── test/java/
 ├── README.md
 ├── LICENSE
 ├── .gitignore
 └── pom.xml
 ```
 
-## Technologies Used
+## Technologies
 
 - Java 17
-- Maven (with Maven Wrapper)
+- Maven
 - SQLite
-- JDBC (`org.xerial:sqlite-jdbc`)
+- JDBC
 - JUnit 5
 
 ## Requirements
 
 - Java 17 or later
 - Git
-- No local Maven installation is required — the project includes the
-  Maven Wrapper (`mvnw` / `mvnw.cmd`)
+- Maven Wrapper included
 
-## Installation
+## Database
 
-Clone the repository and build the project:
+The application uses a SQLite database at `database/emspro.db`. The database file is intentionally not committed to version control. Initialize it using `database/schema.sql` before running the application.
+
+## Running
 
 ```bash
-git clone https://github.com/<your-username>/EMS-Pro.git
-cd EMS-Pro
 ./mvnw clean install
-```
-
-## Database Initialization
-
-EMS Pro uses a SQLite database file located at `database/emspro.db`. This
-file is not committed to version control and must be created locally
-before running the application, using the schema defined in
-[`database/schema.sql`](database/schema.sql).
-
-Using the `sqlite3` CLI:
-
-```bash
-sqlite3 database/emspro.db < database/schema.sql
-```
-
-If the `sqlite3` CLI is not available, the schema can instead be applied
-through any JDBC-based SQLite client using the same
-`database/schema.sql` file.
-
-## Running the Application
-
-Once the database has been initialized, run the application via Maven:
-
-```bash
 ./mvnw compile exec:java -Dexec.mainClass="com.abdullahalmutairi.emspro.Main"
 ```
 
-Alternatively, package and run the built jar:
-
-```bash
-./mvnw clean package
-java -cp target/classes:$(find ~/.m2 -name "sqlite-jdbc-*.jar" | head -1) com.abdullahalmutairi.emspro.Main
-```
-
-The application starts an interactive console menu for navigating
-Employees, Departments, Positions, Attendance, and Reports.
-
 ## Console Screenshots
 
-*(Placeholder — screenshots of the running console application will be
-added here.)*
+Screenshots of the running console application should be added here once the final UI/output captures are prepared.
 
 ## Future Improvements
 
-- Automated unit and integration test coverage for services and
-  repositories
-- Additional reporting (e.g., attendance rate by department)
-- Externalized database configuration (e.g., environment variables)
-- Packaging as a distributable executable jar
+- Automated unit and integration test coverage
+- Additional reporting
+- Externalized database configuration
+- Distributable executable JAR
+- Richer desktop UI
 
 ## Author
 
-Abdullah Almutairi
+**Abdullah Almutairi**  
+Electrical & Computer Engineering Student · King Abdulaziz University
 
 ## License
 
-This project is licensed under the MIT License — see the
-[LICENSE](LICENSE) file for details.
+MIT License
