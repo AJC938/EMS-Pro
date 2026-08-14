@@ -1,31 +1,37 @@
-# EMS Pro
+# EMS-Pro
 
-**Enterprise Employee Management System**
+**Enterprise Employee Management System** — a Java application for managing employees, departments, positions, and attendance records using a layered architecture with **JDBC + SQLite** persistence.
 
-A Java application for managing employees, departments, positions, and attendance records using a layered architecture with JDBC and SQLite persistence.
+## Product Scope
+
+EMS-Pro models a small enterprise HR workflow and separates presentation, business logic, persistence, and domain models instead of placing database logic directly in the UI.
 
 ## Features
 
-- Full CRUD for Employees, Departments, Positions, and Attendance
-- Search by ID
+- CRUD for Employees, Departments, Positions, and Attendance
+- Employee search by ID
 - Attendance lookup by employee
-- Summary reports
+- Summary reporting
 - Duplicate-email prevention
 - Input validation
-- Console-based menu navigation
+- Custom exception handling
+- Console-based application workflow
 
 ## Architecture
 
-EMS Pro follows a **Layered Architecture**:
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+JDBC / SQLite
+```
 
-- **Controller** — console UI and user interaction
-- **Service** — business rules and orchestration
-- **Repository** — data-access contracts and JDBC implementations
-- **Model** — domain entities
-- **Validation / Exception** — validation and custom exceptions
-- **Database / Config** — SQLite and JDBC connection management
+Supporting layers include domain models, configuration, database connection management, validation, and custom exceptions.
 
-See the [`docs/`](docs) directory for the project's requirements, architecture, domain model, glossary, and database design.
+Detailed requirements, architecture, domain modeling, glossary, and database design are documented in [`docs/`](docs).
 
 ## Project Structure
 
@@ -51,7 +57,7 @@ EMS-Pro/
 └── pom.xml
 ```
 
-## Technologies
+## Tech Stack
 
 - Java 17
 - Maven
@@ -61,32 +67,49 @@ EMS-Pro/
 
 ## Requirements
 
-- Java 17 or later
+- Java 17+
 - Git
-- Maven Wrapper included
+- Maven Wrapper (included)
 
-## Database
+## Database Setup
 
-The application uses a SQLite database at `database/emspro.db`. The database file is intentionally not committed to version control. Initialize it using `database/schema.sql` before running the application.
+The application uses a SQLite database at `database/emspro.db`. The database file is intentionally excluded from version control.
 
-## Running
+Initialize the schema with:
+
+```bash
+sqlite3 database/emspro.db < database/schema.sql
+```
+
+If SQLite CLI is unavailable, execute `database/schema.sql` using any SQLite database tool before running the application.
+
+## Run
+
+### Windows
+
+```bash
+mvnw.cmd clean install
+mvnw.cmd compile exec:java -Dexec.mainClass="com.abdullahalmutairi.emspro.Main"
+```
+
+### macOS / Linux
 
 ```bash
 ./mvnw clean install
 ./mvnw compile exec:java -Dexec.mainClass="com.abdullahalmutairi.emspro.Main"
 ```
 
-## Console Screenshots
+## Portfolio Status
 
-Screenshots of the running console application should be added here once the final UI/output captures are prepared.
+The application is implemented as a console-based enterprise-style Java project. Final runtime screenshots are not currently stored in the repository, so broken or placeholder images have intentionally not been added.
 
 ## Future Improvements
 
-- Automated unit and integration test coverage
-- Additional reporting
+- Broader automated unit and integration test coverage
+- Additional reporting capabilities
 - Externalized database configuration
 - Distributable executable JAR
-- Richer desktop UI
+- Desktop or web presentation layer
 
 ## Author
 
